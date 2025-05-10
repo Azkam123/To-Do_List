@@ -1,37 +1,95 @@
 import 'package:flutter/material.dart';
-import 'screens/home_screen.dart';
-import 'screens/about_screen.dart';
-import 'theme/light_theme.dart';
-import 'theme/dark_theme.dart';
 
-void main(){
-  runApp(ToDoApp());
+void main() {
+    runApp(ToDoApp());
 }
 
-class ToDoApp extends StatefulWidget{
-  @override
-  _ToDoAppState createState() => _ToDoAppState();
+class ToDoApp extends StatelessWidget {
+    @override
+    Widget build(BuildContext context){ 
+        return MaterialApp(
+            title: 'To-Do List',
+            debugShowCheckedModeBanner: false,
+        );
+    }
 }
 
-class _ToDoAppState extends State<ToDoApp> {
-  bool _isDarkTheme = false;
+class ToDoListScreen extends StatelessWidget{
+    @override
+    _ToDoListScreenState createState() => _ToDoListScreenState();
+}
 
-  void _toggleTheme(){
-    setState(() {
-      _isDarkTheme = !_isDarkTheme;
-    });
-  }
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'To-Do App',
-      theme: _isDarkTheme ? darkTheme : lightTheme,
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes:{
-        '/': (context) => HomeScreen(toggleTheme: _toggleTheme),
-        '/about': (context) => AboutScreen(),
-      } ,
-    );
-  }
+class _ToDoListScreenState extends State<ToDoListScreen> {
+    final List<String> _tasks = [];
+    final TextEditingController _controller =TextEditingController();
+
+    void _addTask(){
+        if (_controller.text.isNotEmpty) {
+            setState((){
+                _tasks.add(_controller.text);
+                _controller.clear();
+
+            });
+            }
+        }
+
+        void _removeTask(int index){~
+            setState((){
+                _tasks.removeAt(index);
+            });
+        }
+
+        @override
+        Widget build(BuildContext context) {
+            return Scaffold(
+                appBar: AppBar(
+                    title: Text('To-Do List'),
+                    backgroundColor: Colors.deepPurple,
+                ),
+                body: Column(
+                    children: [
+                        Padding(
+                            Padding: EdgeInsets.all(12),
+                            child: Row(
+                                children:[
+                                    Expanded(
+                                        child: TextField(
+                                            controller: _controller,
+                                            decoration: InputDecoration(
+                                                hintText: 'Tambah tugas...',
+                                                border: OutlineInputBorder(),
+                                            ),
+                                        ),
+                                    ),
+                                    SizedBox(widget: 10),
+                                    ElevatedButton(
+                                        onPressed: _addTask,
+                                        child: Text('Tambah'),
+                                    ),
+
+                                ],
+                            ),
+                        ),
+                        Expanded(
+                            child: ListView.builder(
+                                itemCount: _tasks.length,
+                                itemBuilder: (context, index){
+                                    return Card(
+                                        margin: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                                        child: ListTile(
+                                            title: Text(_tasks[index]),
+                                            trailing: IconButton(
+                                                icon: Icon(Icons.delete, color: Colors.red),
+                                                onPressed: () => _removeTask(index),
+                                            ),
+                                        ),
+                                    );
+                                },
+                            ),
+                        ),
+                    ],
+                ),
+            );
+        }
+
 }
