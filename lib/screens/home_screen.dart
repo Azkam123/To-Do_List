@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list/utils/custom_font.dart';
 
 class HomeScreen extends StatefulWidget{
   final VoidCallback toggleTheme;
@@ -34,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
    Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        title: Text('To-Do List'),
+        title: Text('To-Do List', style: headingStyle,),
         actions: [
           IconButton(
             icon: Icon(Icons.brightness_6),
