@@ -14,7 +14,7 @@ class ToDoApp extends StatelessWidget {
     }
 }
 
-class ToDoListScreen extends StatelessWidget{
+class ToDoListScreen extends StatefulWidget{
     @override
     _ToDoListScreenState createState() => _ToDoListScreenState();
 }
@@ -33,7 +33,7 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
             }
         }
 
-        void _removeTask(int index){~
+        void _removeTask(int index){
             setState((){
                 _tasks.removeAt(index);
             });
@@ -49,7 +49,7 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
                 body: Column(
                     children: [
                         Padding(
-                            Padding: EdgeInsets.all(12),
+                            padding: EdgeInsets.all(12),
                             child: Row(
                                 children:[
                                     Expanded(
@@ -61,7 +61,7 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
                                             ),
                                         ),
                                     ),
-                                    SizedBox(widget: 10),
+                                    SizedBox(width: 10),
                                     ElevatedButton(
                                         onPressed: _addTask,
                                         child: Text('Tambah'),
